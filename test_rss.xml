@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<rss version="2.0">
+<channel>
+    <title>Users's Ratings</title>
+    <link>http://www.imdb.com/user/ur1234567/ratings</link>
+    <item>
+        <pubDate>Sun, 07 Feb 2016 00:00:00 GMT</pubDate>
+        <title>Ex Machina (2015)</title>
+        <link>http://www.imdb.com/title/tt0470752/</link>
+        <guid>http://www.imdb.com/title/tt0470752/</guid>
+        <description>
+            user rated this 7.
+        </description>
+        <pubDate>Sun Feb  7 00:00:00 2016</pubDate>
+    </item>
+    <item>
+        <pubDate>Sat, 16 Jan 2016 00:00:00 GMT</pubDate>
+        <title>The Walking Dead (2010 TV Series)</title>
+        <link>http://www.imdb.com/title/tt1520211/</link>
+        <guid>http://www.imdb.com/title/tt1520211/</guid>
+        <description>
+            user rated this 8.
+        </description>
+        <pubDate>Sat Jan 16 00:00:00 2016</pubDate>
+    </item>
+    <item>
+        <pubDate>Sun, 31 May 2015 23:00:00 GMT</pubDate>
+        <title>Hardhome (2015 TV Episode)</title>
+        <link>http://www.imdb.com/title/tt3866850/</link>
+        <guid>http://www.imdb.com/title/tt3866850/</guid>
+        <description>
+            user rated this 10.
+        </description>
+        <pubDate>Mon Jun  1 00:00:00 2015</pubDate>
+    </item>
+    <item>
+        <pubDate>Sat, 16 Jan 2016 00:00:00 GMT</pubDate>
+        <title>Making a Murderer (2015 Mini-Series)</title>
+        <link>http://www.imdb.com/title/tt5189670/</link>
+        <guid>http://www.imdb.com/title/tt5189670/</guid>
+        <description>
+            user rated this 8.
+        </description>
+        <pubDate>Sat Jan 16 00:00:00 2016</pubDate>
+    </item>
+</channel>
+</rss>
