@@ -55,7 +55,7 @@ class IMDBUserRatingsTest(unittest.TestCase):
         # run get_user_ratings() with urlopen() mocked
         with open(self._test_file, mode='rb') as mock_user_rss:
             mock_urlopen.return_value = mock_user_rss
-            user_ratings = IMDBUserRatings("ur1234567").get_user_ratings()
+            user_ratings = IMDBUserRatings().get_user_ratings("ur1234567")
 
         exp_items = [{
             'title': "Ex Machina",
@@ -94,7 +94,7 @@ class IMDBUserRatingsTest(unittest.TestCase):
     # test exception
     def test_empty_user_id(self):
         with self.assertRaises(InvalidIMDBUserID):
-            user_ratings = IMDBUserRatings("")
+            user_ratings = IMDBUserRatings().get_user_ratings("")
 
 
 if __name__ == '__main__':

@@ -12,7 +12,7 @@ Your IMDb.com user id can be seen when accessing your profile page.
 
 ```python
 >>> from imdb_user_ratings import IMDBUserRatings
->>> IMDBUserRatings("ur1234567").get_user_ratings()
+>>> IMDBUserRatings().get_user_ratings("ur1234567")
 [{'rating': 8, 'media_type': 'movie', 'title': 'The Intern', 'imdb_id': 'tt2361509', 
 'date_rated': '2016-02-07', 'year_released': 2015}, ... ]
 ```

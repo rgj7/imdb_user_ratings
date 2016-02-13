@@ -34,35 +34,35 @@ class IMDBUserRatings(object):
     """
     Fetches an IMDb.com user's ratings RSS feed, then parses each item into a 'UserRating' object.
     All 'UserRating' objects created are stored into a list.
-
-    Attributes:
-        user_id: A string containing a IMDb.com user id, used to retrieve RSS data from.
-        user_ratings: A list of 'UserRating' objects, each containing parsed data.
     """
     _imdb_user_rss_url = "http://rss.imdb.com/user/{user_id}/ratings"
 
-    def __init__(self, user_id):
-        if user_id == "":
-            raise InvalidIMDBUserID("user id cannot be empty.")
-        self.user_id = user_id
-        self.user_ratings = []
+    def __init__(self):
+        pass
 
-    def get_user_ratings(self):
+    def get_user_ratings(self, user_id):
         """Fetches and parses the a IMDb.com user's ratings RSS feed into a list of 'UserRating' objects.
+
+        Args:
+            user_id: A string containing a IMDb.com user id, used to create user RSS url.
 
         Returns:
             user_ratings (List[UserRating]): A list of 'UserRating' objects containing parsed data.
 
         Raises:
+            InvalidIMDBUserID: The username is invalid (an empty string).
             HTTPError: The server couldn't fulfill the request.
             URLError: Failed to reach the server.
             ParseError: If there is a failure parsing the `user_rss` file object.
         """
-        rss_url = self._imdb_user_rss_url.format(user_id=self.user_id)
-        with request.urlopen(rss_url) as user_rss:
-            items = ElementTree.parse(user_rss).getroot()[0][2:]  # skip over first two
-        user_ratings = [self._parse_element(item) for item in items]
-        return user_ratings
+        if not user_id:
+            raise InvalidIMDBUserID("user id cannot be empty.")
+
+        url = self._imdb_user_rss_url.format(user_id=user_id)
+        with request.urlopen(url) as data:
+            element_tree = ElementTree.parse(data)
+            items = element_tree.getroot()[0][2:]  # skip over first two
+        return [self._parse_element(item) for item in items]
 
     @staticmethod
     def _parse_date(string):
@@ -144,5 +144,3 @@ class IMDBUserRatings(object):
         user_rating = self._parse_user_rating(element[4].text)
         return UserRating(title, year_released, media_type, imdb_id, user_rating, date_rated)
 
-    def __repr__(self):
-        return "<IMDBUserRatings: {} titles>".format(len(self.user_ratings))
