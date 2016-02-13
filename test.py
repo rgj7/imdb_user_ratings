@@ -89,7 +89,7 @@ class IMDBUserRatingsTest(unittest.TestCase):
 
         self.assertEqual(len(user_ratings), 4)
         for idx, exp_item in enumerate(exp_items):
-            self.assertEqual(exp_item, user_ratings[idx].__dict__)
+            self.assertEqual(exp_item, user_ratings[idx])
 
     # test exception
     def test_empty_user_id(self):

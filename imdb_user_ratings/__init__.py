@@ -1,29 +1,13 @@
+"""
+imdb_user_ratings
+~~~~~~~~~~~~~~~~~
+Created by Raul Gonzalez
+"""
+
 from datetime import datetime
 from re import match
 from urllib import request
 from xml.etree import ElementTree
-
-
-class UserRating(object):
-    """
-    Attributes:
-        title (str): media's title (ex. "The Matrix")
-        year_released (int): year the title was released (ex. 1999)
-        media_type (str): media type of the title (ex. "movie", "tv-series", ...)
-        imdb_id (str): IMDb.com title id (ex. "tt1234567")
-        rating (int): user's rating of the title (ex. 1-10)
-        date_rated (str): date string when the user rated the title. (ex. "2005-12-25")
-    """
-    def __init__(self, title, year_released, media_type, imdb_id, rating, date_rated):
-        self.title = title
-        self.year_released = year_released
-        self.media_type = media_type
-        self.imdb_id = imdb_id
-        self.rating = rating
-        self.date_rated = date_rated
-
-    def __repr__(self):
-        return str(self.__dict__)
 
 
 class InvalidIMDBUserID(Exception):
@@ -32,8 +16,7 @@ class InvalidIMDBUserID(Exception):
 
 class IMDBUserRatings(object):
     """
-    Fetches an IMDb.com user's ratings RSS feed, then parses each item into a 'UserRating' object.
-    All 'UserRating' objects created are stored into a list.
+    Fetches and parses an IMDb.com user's ratings RSS feed.
     """
     _imdb_user_rss_url = "http://rss.imdb.com/user/{user_id}/ratings"
 
@@ -47,7 +30,7 @@ class IMDBUserRatings(object):
             user_id: A string containing a IMDb.com user id, used to create user RSS url.
 
         Returns:
-            user_ratings (List[UserRating]): A list of 'UserRating' objects containing parsed data.
+            A list of dicts containing parsed data.
 
         Raises:
             InvalidIMDBUserID: The username is invalid (an empty string).
@@ -132,15 +115,25 @@ class IMDBUserRatings(object):
         from an item of the IMDb.com user's ratings RSS feed.
 
         Args:
-            element: An 'Element' from an 'ElementTree', to be parsed and turned into a
-                'UserRating' object.
+            element: An 'Element' from an 'ElementTree' containing parsed RSS data
 
         Returns:
-            A 'UserRating' object containing parsed data from the given element.
+            A dict containing parsed data from the given element.
+
+            date_rated (str): date string when the user rated the title. (ex. "2005-12-25")
+            title (str): media's title (ex. "The Matrix")
+            year_released (int): year the title was released (ex. 1999)
+            media_type (str): media type of the title (ex. "movie", "tv-series", ...)
+            imdb_id (str): IMDb.com title id (ex. "tt1234567")
+            rating (int): user's rating of the title (ex. 1-10)
         """
-        date_rated = self._parse_date(element[0].text)
         title, year_released, media_type = self._parse_title_year_media_type(element[1].text)
-        imdb_id = self._parse_imdb_id(element[2].text)
-        user_rating = self._parse_user_rating(element[4].text)
-        return UserRating(title, year_released, media_type, imdb_id, user_rating, date_rated)
+        return dict(
+            date_rated=self._parse_date(element[0].text),
+            title=title,
+            year_released=year_released,
+            media_type=media_type,
+            imdb_id=self._parse_imdb_id(element[2].text),
+            rating=self._parse_user_rating(element[4].text)
+        )
 
