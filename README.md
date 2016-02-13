@@ -20,5 +20,5 @@ Your IMDb.com user id can be seen when accessing your profile page.
 Unit Tests
 ==========
 ```bash
-python tests.py
+python test.py
 ```
